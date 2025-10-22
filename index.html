@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potato管理工具 - 多功能自动化平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div id="loginPanel" class="panel">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-potato"></i> Potato管理工具</h1>
+                <p>多功能自动化管理平台</p>
+            </div>
+            <div class="login-form">
+                <div class="form-group">
+                    <label>用户名:</label>
+                    <input type="text" id="username" placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <label>密码:</label>
+                    <input type="password" id="password" placeholder="请输入密码">
+                </div>
+                <button id="loginBtn" class="btn-primary">登录</button>
+                <button id="registerBtn" class="btn-secondary">注册账号</button>
+                <div class="login-links">
+                    <a href="#" id="forgotPassword">忘记密码?</a>
+                    <a href="#" id="importAccounts">导入账号</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用界面 -->
+    <div id="mainApp" class="hidden">
+        <!-- 顶部导航 -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1><i class="fas fa-potato"></i> Potato Manager</h1>
+            </div>
+            <div class="header-center">
+                <div class="status-indicators">
+                    <span class="status-item"><i class="fas fa-circle online"></i> 在线</span>
+                    <span class="status-item"><i class="fas fa-users"></i> 账号: <span id="accountCount">0</span></span>
+                    <span class="status-item"><i class="fas fa-bolt"></i> 代理: <span id="proxyStatus">未设置</span></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="settingsBtn" class="btn-icon" title="设置"><i class="fas fa-cog"></i></button>
+                <button id="logoutBtn" class="btn-secondary">退出</button>
+            </div>
+        </header>
+
+        <!-- 侧边栏 -->
+        <div class="app-container">
+            <nav class="sidebar">
+                <div class="sidebar-section">
+                    <h3>账号管理</h3>
+                    <ul>
+                        <li><a href="#" data-tab="accountManager"><i class="fas fa-user-plus"></i> 注册/登录</a></li>
+                        <li><a href="#" data-tab="accountImport"><i class="fas fa-file-import"></i> 导入账号</a></li>
+                        <li><a href="#" data-tab="accountBatch"><i class="fas fa-edit"></i> 批量修改</a></li>
+                        <li><a href="#" data-tab="proxyManager"><i class="fas fa-network-wired"></i> 代理切换</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>频道与群组</h3>
+                    <ul>
+                        <li><a href="#" data-tab="channelCreator"><i class="fas fa-plus-circle"></i> 批量创建</a></li>
+                        <li><a href="#" data-tab="groupManager"><i class="fas fa-users"></i> 群组管理</a></li>
+                        <li><a href="#" data-tab="bulkJoin"><i class="fas fa-sign-in-alt"></i> 批量加群</a></li>
+                        <li><a href="#" data-tab="groupSync"><i class="fas fa-sync"></i> 同步群组</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>用户管理</h3>
+                    <ul>
+                        <li><a href="#" data-tab="userCollector"><i class="fas fa-search"></i> 采集用户</a></li>
+                        <li><a href="#" data-tab="bulkInvite"><i class="fas fa-user-plus"></i> 批量拉人</a></li>
+                        <li><a href="#" data-tab="bulkMessage"><i class="fas fa-envelope"></i> 批量私发</a></li>
+                        <li><a href="#" data-tab="phoneFilter"><i class="fas fa-filter"></i> 号码筛活</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>自动化任务</h3>
+                    <ul>
+                        <li><a href="#" data-tab="autoChat"><i class="fas fa-comments"></i> 自动群聊</a></li>
+                        <li><a href="#" data-tab="autoMessage"><i class="fas fa-bullhorn"></i> 自动群发</a></li>
+                        <li><a href="#" data-tab="autoReply"><i class="fas fa-reply"></i> 自动回复</a></li>
+                        <li><a href="#" data-tab="autoPrivate"><i class="fas fa-robot"></i> 自动私聊</a></li>
+                        <li><a href="#" data-tab="autoMarketing"><i class="fas fa-chart-line"></i> 自动营销</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>数据分析</h3>
+                    <ul>
+                        <li><a href="#" data-tab="viewStats"><i class="fas fa-chart-bar"></i> 数据统计</a></li>
+                        <li><a href="#" data-tab="viewLogs"><i class="fas fa-clipboard-list"></i> 操作日志</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- 主内容区域 -->
+            <main class="main-content">
+                <!-- 账号管理标签页 -->
+                <div id="accountManager" class="tab-content active">
+                    <h2><i class="fas fa-user-plus"></i> 账号注册与登录</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>手动登录</h3>
+                            <div class="form-group">
+                                <label>手机号:</label>
+                                <input type="text" id="loginPhone" placeholder="+86 13800138000">
+                            </div>
+                            <div class="form-group">
+                                <label>验证码:</label>
+                                <div class="input-with-button">
+                                    <input type="text" id="loginCode" placeholder="输入验证码">
+                                    <button id="getCodeBtn" class="btn-small">获取验证码</button>
+                                </div>
+                            </div>
+                            <button id="manualLoginBtn" class="btn-primary">登录</button>
+                        </div>
+
+                        <div class="card">
+                            <h3>批量注册</h3>
+                            <div class="form-group">
+                                <label>注册数量:</label>
+                                <input type="number" id="regCount" value="5" min="1" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>接码平台:</label>
+                                <select id="smsService">
+                                    <option value="sms-activate">SMS-Activate</option>
+                                    <option value="5sim">5Sim</option>
+                                    <option value="manual">手动输入</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>API密钥:</label>
+                                <input type="text" id="apiKey" placeholder="接码平台API密钥">
+                            </div>
+                            <button id="batchRegisterBtn" class="btn-success">开始注册</button>
+                        </div>
+
+                        <div class="card">
+                            <h3>账号状态</h3>
+                            <div class="status-display">
+                                <div class="status-item">
+                                    <span class="label">总账号:</span>
+                                    <span class="value" id="totalAccounts">0</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="label">在线账号:</span>
+                                    <span class="value" id="onlineAccounts">0</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="label">今日注册:</span>
+                                    <span class="value" id="todayReg">0</span>
+                                </div>
+                            </div>
+                            <button id="refreshStatusBtn" class="btn-small">刷新状态</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他标签页内容将在这里动态加载 -->
+                <div id="otherTabs" class="tab-content">
+                    <!-- 其他标签页将通过JavaScript动态生成 -->
+                </div>
+            </main>
+        </div>
+
+        <!-- 底部状态栏 -->
+        <footer class="app-footer">
+            <div class="footer-left">
+                <span id="currentTask">就绪</span>
+            </div>
+            <div class="footer-center">
+                <span id="systemTime">--:--:--</span>
+            </div>
+            <div class="footer-right">
+                <span>内存: <span id="memoryUsage">--</span>MB</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 全局设置模态框 -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>全局设置</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 设置内容 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/account-manager.js"></script>
+    <script src="js/channel-manager.js"></script>
+    <script src="js/user-collector.js"></script>
+    <script src="js/bulk-actions.js
